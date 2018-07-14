@@ -1,0 +1,14 @@
+
+@import '../../scss/_variables.scss';
+header {
+  height: 50px;
+}
+.logo {
+  height: 100%;
+  width: 200px;
+  padding: 0.5em 2em;
+  background: $secondary;
+  img {
+    width: 100%;
+  }
+}

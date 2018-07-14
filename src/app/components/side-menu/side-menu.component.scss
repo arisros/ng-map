@@ -1,0 +1,25 @@
+@import '../../scss/_variables.scss';
+
+nav {
+  background: $primary;
+  color: white;
+  width: 200px;
+  height: calc(100vh - 50px);
+  ul,li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  ul {
+    padding-top: 1em;
+  }
+  a {
+    display: block;
+    padding: 0.5em 1em;
+    color: white;
+    text-decoration: none;
+  }
+  a:hover {
+    background: $secondary;
+  }
+}

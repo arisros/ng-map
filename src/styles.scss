@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+@import './app/scss/_variables.scss';
+@import url('https://fonts.googleapis.com/css?family=Kanit:200,400,700');
+body {
+  margin: 0;
+  font-family: 'Kanit', Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
+  font-weight: 100;
+}
+app-map {
+  // width: calc(100%-200px);
+  margin-left: 200px;
+  display: block;
+}
+app-side-menu {
+  position: fixed;
+}
+app-root {
+  margin: 0;
+  // display: flex;
+  // flex-wrap: wrap;
+}
+h1,h2,h3,h3,h4,h5, p {
+  margin: 0;
+  padding: 0;
+}
+
+.btn.btn-default {
+  border: 1px solid $grey-ligther;
+}
+
+.btn.btn-primary {
+  color: black;
+  background: $yellow;
+  border-color: $yellow;
+  &:hover, &:active {
+    background: darken($yellow, 5);
+  }
+}
+

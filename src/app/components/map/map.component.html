@@ -1,0 +1,31 @@
+<div
+  [ngClass]="{fullscreen: fullscreen}"
+  class="container-fluid">
+  <h1 *ngIf="!fullscreen">Location</h1>
+  <section class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <button 
+          *ngIf="fullscreen"
+          class="btn btn-circle" (click)="onClose()">
+          <fa-icon [icon]="faArrowLeft"></fa-icon>
+        </button>
+        <input placeholder="Find my location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
+          #search [formControl]="searchControl">
+        <button *ngIf="fullscreen" 
+          (click)="selectLocation()"
+          class="btn btn-primary">Select Location</button>
+      </div>
+    </div>
+    <div class="col-md-6 map-wrap">
+      <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+        <agm-marker *ngIf="locationSelected" [iconUrl]="markerIconUrl()" [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" (dragEnd)="markerDrag($event)"></agm-marker>
+      </agm-map>
+      <p *ngIf="!fullscreen">Map to small?</p>
+      <button
+         *ngIf="!fullscreen"
+        class="btn btn-default" (click)="fullscreen = true">Use Full Map</button>
+      <button *ngIf="!fullscreen" class="btn btn-primary">Save</button>
+    </div>
+  </section>
+</div>
