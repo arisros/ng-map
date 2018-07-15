@@ -20,13 +20,22 @@
           class="form-control"
           #search [formControl]="searchControl">
         <button *ngIf="fullscreen && locationSelected" 
-          (click)="selectLocation()"
+          (click)="selectLocation($event, 'nope')"
           class="btn btn-primary">Select Location</button>
       </div>
     </div>
     <div *ngIf="!fullscreen" class="col-md-6">
-      <h4>Your Saved Location</h4>
+      <div class="d-lg-flex align-items-center">
+        <h4>Your Saved Location</h4>
+        <div
+          *ngIf="savedLocation.length"
+          (click)="clearLocation()"
+          class="link">Clear history</div>
+      </div>
       <ul class="list-location">
+        <li *ngIf="!savedLocation.length">
+          <p class="not-exist-text">Haven't history yet </p>
+        </li>
         <li *ngFor="let location of savedLocation.reverse()">
           <div class="btn" (click)="setLocation(location)">
             <fa-icon [icon]="faMapMarkerAlt"></fa-icon> {{location.name}}
@@ -43,7 +52,7 @@
           <p *ngIf="!fullscreen">Map to small?</p>
           <button *ngIf="!fullscreen" class="btn btn-default" (click)="fullscreen = true">Use Full Map</button>
         </div>
-        <button *ngIf="!fullscreen" (click)="selectLocation()" [disabled]="!locationSelected" class="btn btn-primary">Save</button>
+        <button *ngIf="!fullscreen" (click)="selectLocation($event, 'reset')" [disabled]="!locationSelected" class="btn btn-primary">Save</button>
       </section>
     </div>
   </section>

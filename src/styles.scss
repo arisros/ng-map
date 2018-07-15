@@ -64,3 +64,9 @@ ul,li {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba($yellow, 0.1);
 }
+.link {
+  padding: 0 1em;
+  color: $yellow;
+  text-decoration: underline;
+  cursor: pointer; 
+}

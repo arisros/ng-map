@@ -99,16 +99,18 @@ export class MapComponent implements OnInit {
     this.zoom = 13;
   }
 
-  public selectLocation() {
+  public selectLocation(e, reset) {
     this.fullscreen = false;
     const location = {
       name: this.searchControl.value,
       latitude: this.latitude,
       longitude: this.longitude
     };
-    this.savedLocation.push(location);
-    this.historyService.saveLocation(this.savedLocation);
-    this.resetForm();
+    if (reset === 'reset') {
+      this.savedLocation.push(location);
+      this.historyService.saveLocation(this.savedLocation);
+      this.resetForm();
+    }
   }
 
   public resetForm() {
@@ -117,6 +119,11 @@ export class MapComponent implements OnInit {
     this.longitude = 113.92132700000002;
     this.zoom = 4;
     this.locationSelected = false;
+  }
+
+  public clearLocation() {
+    this.savedLocation = [];
+    this.historyService.saveLocation(this.savedLocation);
   }
 }
 
