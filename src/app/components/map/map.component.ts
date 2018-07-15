@@ -4,8 +4,10 @@ import { FormControl } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
 import { } from '@types/googlemaps';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { MapService } from '../../services/map.service';
+import { HistoryService } from '../../services/history.service';
 
 @Component({
   selector: 'app-map',
@@ -20,6 +22,8 @@ export class MapComponent implements OnInit {
   public zoom: number;
   public locationSelected = false;
   public faArrowLeft = faArrowLeft;
+  public faMapMarkerAlt = faMapMarkerAlt;
+  public savedLocation = [];
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
@@ -31,7 +35,8 @@ export class MapComponent implements OnInit {
   constructor(
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private mapService: MapService
+    private mapService: MapService,
+    private historyService: HistoryService
   ) { }
 
   ngOnInit() {
@@ -40,6 +45,7 @@ export class MapComponent implements OnInit {
     this.longitude = 113.92132700000002;
 
     this.searchControl = new FormControl();
+    this.savedLocation = this.historyService.locationHistory();
     this.initMap();
   }
 
@@ -57,17 +63,15 @@ export class MapComponent implements OnInit {
         this.ngZone.run(() => {
           // get the place result
           const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
           // verify result
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
           this.locationSelected = true;
-          // set latitude, longitude and zoom
-          // console.log(place.name);
+          this.searchControl.setValue(place.name);
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
-          this.zoom = 15;
+          this.zoom = 13;
         });
       });
     });
@@ -76,28 +80,44 @@ export class MapComponent implements OnInit {
   public markerDrag(e) {
     this.mapService.getLocation(e.coords.lat, e.coords.lng).subscribe((location: Res) => {
       if (location.results) {
-        this.setLocation(location.results[0].formatted_address);
+        this.searchControl.setValue(location.results[0].formatted_address);
+        this.latitude = location.results[0].geometry.location.lat;
+        this.longitude = location.results[0].geometry.location.lng;
       }
-    })
-  }
-
-  public setPostition(latLng) {
-
-  }
-
-  private setLocation(str) {
-    this.searchControl.setValue(str);
+    });
   }
 
   public markerIconUrl() {
     return require('../../../assets/marker.png');
   }
 
-  public selectLocation() {
-    this.fullscreen = false;
-    // todo
+  public setLocation(location) {
+    this.searchControl.setValue(location.name);
+    this.longitude = location.longitude;
+    this.latitude = location.latitude;
+    this.locationSelected = true;
+    this.zoom = 13;
   }
 
+  public selectLocation() {
+    this.fullscreen = false;
+    const location = {
+      name: this.searchControl.value,
+      latitude: this.latitude,
+      longitude: this.longitude
+    };
+    this.savedLocation.push(location);
+    this.historyService.saveLocation(this.savedLocation);
+    this.resetForm();
+  }
+
+  public resetForm() {
+    this.searchControl.setValue('');
+    this.latitude = 0.789275;
+    this.longitude = 113.92132700000002;
+    this.zoom = 4;
+    this.locationSelected = false;
+  }
 }
 
 

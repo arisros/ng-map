@@ -1,16 +1,44 @@
 <nav>
+  <section class="user">
+    <img [src]="userpict" alt="">
+    <h4 class="username">
+      {{username}}
+    </h4>
+  </section>
   <ul>
     <li>
-      <a href="#">My Staff Reqeuest</a>
+      <a href="#">
+        <fa-icon [icon]="faQuestionCircle"></fa-icon>
+        My Staff Reqeuest</a>
     </li>
     <li>
-      <a href="#">My Account</a>
+      <a href="#">
+        <fa-icon [icon]="faQuestionCircle"></fa-icon>
+        My Account</a>
     </li>
     <li>
-      <a href="#">Chat</a>
+      <a href="#">
+        <fa-icon [icon]="faCommentAlt"></fa-icon>
+        Chat</a>
     </li>
     <li>
-      <a href="#">Help</a>
+      <a href="#">
+        <fa-icon [icon]="faQuestionCircle"></fa-icon>
+        Help</a>
+    </li>
+  </ul>
+  <ul class="bottom">
+    <li>
+      <a href="#">Logout</a>
+    </li>
+    <li>
+      <a href="#">
+        <img src="https://muddydogcoffee.com/wp-content/uploads/2017/03/sumatra-flag.jpg" alt="indonesian flag">
+      </a>
+      <a href="#">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png"
+          alt="british flag">
+      </a>
     </li>
   </ul>
 </nav>

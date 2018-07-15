@@ -1,6 +1,7 @@
 @import '../../scss/_variables.scss';
 
 nav {
+  position: relative;
   background: $primary;
   color: white;
   width: 200px;
@@ -15,11 +16,53 @@ nav {
   }
   a {
     display: block;
-    padding: 0.5em 1em;
+    padding: 0.7em 1em;
     color: white;
     text-decoration: none;
+    color: lighten(grey, 10);
   }
   a:hover {
     background: $secondary;
+    color: lighten(grey, 30);
+  }
+  .bottom {
+    padding: 1em;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    width: 200px;
+    justify-content: space-between;
+    li {
+      display: flex;
+      // flex-basis: 30%;
+    }
+    a {
+      padding: 0;
+      width: 30px;
+      margin-left: 0.5em;
+    }
+    img {
+      // width: 80px;
+      width: 100%;
+    }
+  }
+  .user {
+    text-align: center;
+    padding-top: 2em;
+  }
+  .username {
+    margin-top: 1em;
+  }
+  img {
+    background: white;
+    width: 120px;
+  }
+}
+
+@media only screen and(max-width: 500px) {
+  nav {
+    display: none;
+    opacity: 0;
   }
 }

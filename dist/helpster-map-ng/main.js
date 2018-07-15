@@ -174,7 +174,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n  <div class=\"logo\">\n    <img src=\"https://portal.helpster.id/static/images/helpster_logo_black_bg.png\" alt=\"\">\n  </div>\n</header>\n"
+module.exports = "<header>\n  <div class=\"logo\">\n    <img src=\"https://portal.helpster.id/static/images/helpster_logo_black_bg.png\" alt=\"\">\n  </div>\n  <h2 class=\"title\">Chat</h2>\n</header>\n"
 
 /***/ }),
 
@@ -185,7 +185,7 @@ module.exports = "<header>\n  <div class=\"logo\">\n    <img src=\"https://porta
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "header {\n  height: 50px; }\n\n.logo {\n  height: 100%;\n  width: 200px;\n  padding: 0.5em 2em;\n  background: #282A31; }\n\n.logo img {\n    width: 100%; }\n"
+module.exports = "header {\n  height: 50px;\n  display: flex;\n  align-items: center; }\n\n.logo {\n  height: 100%;\n  width: 200px;\n  padding: 0.7em 2em;\n  background: #282A31; }\n\n.logo img {\n    width: 100%; }\n\n.title {\n  margin-left: 0.8em;\n  font-size: 1.4em; }\n"
 
 /***/ }),
 
@@ -237,7 +237,7 @@ var HeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div\n  [ngClass]=\"{fullscreen: fullscreen}\"\n  class=\"container-fluid\">\n  <h1 *ngIf=\"!fullscreen\">Location</h1>\n  <section class=\"row\">\n    <div class=\"col-md-6\">\n      <div class=\"form-group\">\n        <button \n          *ngIf=\"fullscreen\"\n          class=\"btn btn-circle\" (click)=\"onClose()\">\n          <fa-icon [icon]=\"faArrowLeft\"></fa-icon>\n        </button>\n        <input placeholder=\"Find my location\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"off\" type=\"text\" class=\"form-control\"\n          #search [formControl]=\"searchControl\">\n        <button *ngIf=\"fullscreen\" \n          (click)=\"selectLocation()\"\n          class=\"btn btn-primary\">Select Location</button>\n      </div>\n    </div>\n    <div class=\"col-md-6 map-wrap\">\n      <agm-map [latitude]=\"latitude\" [longitude]=\"longitude\" [scrollwheel]=\"false\" [zoom]=\"zoom\">\n        <agm-marker *ngIf=\"locationSelected\" [iconUrl]=\"markerIconUrl()\" [latitude]=\"latitude\" [longitude]=\"longitude\" [markerDraggable]=\"true\" (dragEnd)=\"markerDrag($event)\"></agm-marker>\n      </agm-map>\n      <p *ngIf=\"!fullscreen\">Map to small?</p>\n      <button\n         *ngIf=\"!fullscreen\"\n        class=\"btn btn-default\" (click)=\"fullscreen = true\">Use Full Map</button>\n      <button *ngIf=\"!fullscreen\" class=\"btn btn-primary\">Save</button>\n    </div>\n  </section>\n</div>"
+module.exports = "<div\n  [ngClass]=\"{fullscreen: fullscreen}\"\n  class=\"container-fluid\">\n  <div *ngIf=\"!fullscreen\" class=\"breadcrumb\">\n    <h1 >Send Location</h1>\n  </div>\n  <section class=\"row\">\n    <div class=\"col-md-12\">\n      <div class=\"form-group\">\n        <button \n          *ngIf=\"fullscreen\"\n          class=\"btn btn-circle\" (click)=\"onClose()\">\n          <fa-icon [icon]=\"faArrowLeft\"></fa-icon>\n        </button>\n        <input \n          placeholder=\"Find my location\" \n          autocorrect=\"off\" autocapitalize=\"off\" \n          spellcheck=\"off\" \n          type=\"text\" \n          class=\"form-control\"\n          #search [formControl]=\"searchControl\">\n        <button *ngIf=\"fullscreen && locationSelected\" \n          (click)=\"selectLocation()\"\n          class=\"btn btn-primary\">Select Location</button>\n      </div>\n    </div>\n    <div *ngIf=\"!fullscreen\" class=\"col-md-6\">\n      <h4>Your Saved Location</h4>\n      <ul class=\"list-location\">\n        <li *ngFor=\"let location of savedLocation.reverse()\">\n          <div class=\"btn\" (click)=\"setLocation(location)\">\n            <fa-icon [icon]=\"faMapMarkerAlt\"></fa-icon> {{location.name}}\n          </div>\n        </li>\n      </ul>\n    </div>\n    <div class=\"col-md-6 map-wrap\">\n      <agm-map [latitude]=\"latitude\" [longitude]=\"longitude\" [scrollwheel]=\"false\" [zoom]=\"zoom\">\n        <agm-marker *ngIf=\"locationSelected\" [iconUrl]=\"markerIconUrl()\" [latitude]=\"latitude\" [longitude]=\"longitude\" [markerDraggable]=\"true\" (dragEnd)=\"markerDrag($event)\"></agm-marker>\n      </agm-map>\n      <section class=\"footer-control\">\n        <div>\n          <p *ngIf=\"!fullscreen\">Map to small?</p>\n          <button *ngIf=\"!fullscreen\" class=\"btn btn-default\" (click)=\"fullscreen = true\">Use Full Map</button>\n        </div>\n        <button *ngIf=\"!fullscreen\" (click)=\"selectLocation()\" [disabled]=\"!locationSelected\" class=\"btn btn-primary\">Save</button>\n      </section>\n    </div>\n  </section>\n</div>"
 
 /***/ }),
 
@@ -248,7 +248,7 @@ module.exports = "<div\n  [ngClass]=\"{fullscreen: fullscreen}\"\n  class=\"cont
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".container-fluid.fullscreen {\n  width: 100vw;\n  height: 100vh;\n  max-width: 100%;\n  background: white;\n  position: fixed;\n  top: 0;\n  left: 0;\n  padding: 1em; }\n  .container-fluid.fullscreen .form-group {\n    display: flex; }\n  .container-fluid.fullscreen .form-group > * {\n      margin-left: 0.25em; }\n  .container-fluid.fullscreen * {\n    z-index: 10;\n    position: relative; }\n  .container-fluid.fullscreen agm-map {\n    height: 100vh;\n    width: 100%;\n    position: fixed;\n    top: 0;\n    left: 0;\n    z-index: 1; }\n  .container-fluid.fullscreen .map-wrap {\n    z-index: 1; }\n  .container {\n  transition: 0.3s; }\n  agm-map {\n  height: 300px; }\n  .btn-circle {\n  border-radius: 50%;\n  background: white; }\n"
+module.exports = ".container-fluid.fullscreen {\n  width: 100vw;\n  height: 100vh;\n  max-width: 100%;\n  background: white;\n  position: fixed;\n  top: 0;\n  left: 0;\n  padding: 1em;\n  z-index: 1000; }\n  .container-fluid.fullscreen .form-group {\n    display: flex; }\n  .container-fluid.fullscreen .form-group .btn-circle {\n      -ms-grid-row-align: center;\n          align-self: center;\n      flex-grow: 0; }\n  .container-fluid.fullscreen .form-group > * {\n      margin-left: 0.25em; }\n  .container-fluid.fullscreen .btn {\n    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1); }\n  .container-fluid.fullscreen * {\n    z-index: 10;\n    position: relative; }\n  .container-fluid.fullscreen agm-map {\n    height: 100vh;\n    width: 100%;\n    position: fixed;\n    top: 0;\n    left: 0;\n    z-index: 1; }\n  .container-fluid.fullscreen .map-wrap {\n    z-index: 1; }\n  .container-fluid.fullscreen .map-wrap .map-wrap {\n      margin-top: 0em; }\n  .map-wrap {\n  margin-top: 2.9em; }\n  .container {\n  transition: 0.3s; }\n  agm-map {\n  height: 300px; }\n  .btn-circle {\n  border-radius: 50%;\n  background: white;\n  width: 35px;\n  height: 35px;\n  padding: 0;\n  flex-shrink: 0; }\n  @media only screen and (min-width: 500px) {\n  .container-fluid.fullscreen .form-group {\n    width: 50%; } }\n  .breadcrumb {\n  background: #eeeeee;\n  margin: 0 -1.05em 1em -1.05em;\n  border-radius: 0; }\n  .breadcrumb h1 {\n    font-size: 1em; }\n  .list-location {\n  max-height: 50vh;\n  overflow: auto;\n  margin-top: 1em;\n  padding: 0;\n  border: 1px solid #c4c4c4; }\n  .list-location li:last-child .btn {\n    border-bottom: 0; }\n  .list-location .btn {\n    border-bottom: 1px solid #c4c4c4;\n    display: block;\n    text-align: left;\n    padding: 1em;\n    border-radius: 0;\n    font-size: 0.9em;\n    font-weight: 300; }\n  .list-location .btn:hover {\n    background-color: #FDD801; }\n  .footer-control {\n  margin-top: 1em;\n  display: flex;\n  justify-content: space-between; }\n  .footer-control p {\n    font-weight: 400;\n    margin-right: 1em; }\n  .footer-control > * {\n    display: flex;\n    align-items: center; }\n"
 
 /***/ }),
 
@@ -267,6 +267,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
 /* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 /* harmony import */ var _services_map_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/map.service */ "./src/app/services/map.service.ts");
+/* harmony import */ var _services_history_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../services/history.service */ "./src/app/services/history.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -282,13 +283,18 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var MapComponent = /** @class */ (function () {
-    function MapComponent(mapsAPILoader, ngZone, mapService) {
+    function MapComponent(mapsAPILoader, ngZone, mapService, historyService) {
         this.mapsAPILoader = mapsAPILoader;
         this.ngZone = ngZone;
         this.mapService = mapService;
+        this.historyService = historyService;
         this.locationSelected = false;
         this.faArrowLeft = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faArrowLeft"];
+        this.faMapMarkerAlt = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faMapMarkerAlt"];
+        this.savedLocation = [];
         this.closeEvent = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"];
     }
     MapComponent.prototype.ngOnInit = function () {
@@ -296,6 +302,7 @@ var MapComponent = /** @class */ (function () {
         this.latitude = 0.789275;
         this.longitude = 113.92132700000002;
         this.searchControl = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]();
+        this.savedLocation = this.historyService.locationHistory();
         this.initMap();
     };
     MapComponent.prototype.onClose = function () {
@@ -317,11 +324,10 @@ var MapComponent = /** @class */ (function () {
                         return;
                     }
                     _this.locationSelected = true;
-                    // set latitude, longitude and zoom
-                    // console.log(place.name);
+                    _this.searchControl.setValue(place.name);
                     _this.latitude = place.geometry.location.lat();
                     _this.longitude = place.geometry.location.lng();
-                    _this.zoom = 15;
+                    _this.zoom = 13;
                 });
             });
         });
@@ -330,21 +336,39 @@ var MapComponent = /** @class */ (function () {
         var _this = this;
         this.mapService.getLocation(e.coords.lat, e.coords.lng).subscribe(function (location) {
             if (location.results) {
-                _this.setLocation(location.results[0].formatted_address);
+                _this.searchControl.setValue(location.results[0].formatted_address);
+                _this.latitude = location.results[0].geometry.location.lat;
+                _this.longitude = location.results[0].geometry.location.lng;
             }
         });
-    };
-    MapComponent.prototype.setPostition = function (latLng) {
-    };
-    MapComponent.prototype.setLocation = function (str) {
-        this.searchControl.setValue(str);
     };
     MapComponent.prototype.markerIconUrl = function () {
         return __webpack_require__(/*! ../../../assets/marker.png */ "./src/assets/marker.png");
     };
+    MapComponent.prototype.setLocation = function (location) {
+        this.searchControl.setValue(location.name);
+        this.longitude = location.longitude;
+        this.latitude = location.latitude;
+        this.locationSelected = true;
+        this.zoom = 13;
+    };
     MapComponent.prototype.selectLocation = function () {
         this.fullscreen = false;
-        // todo
+        var location = {
+            name: this.searchControl.value,
+            latitude: this.latitude,
+            longitude: this.longitude
+        };
+        this.savedLocation.push(location);
+        this.historyService.saveLocation(this.savedLocation);
+        this.resetForm();
+    };
+    MapComponent.prototype.resetForm = function () {
+        this.searchControl.setValue('');
+        this.latitude = 0.789275;
+        this.longitude = 113.92132700000002;
+        this.zoom = 4;
+        this.locationSelected = false;
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('search'),
@@ -366,7 +390,8 @@ var MapComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [_agm_core__WEBPACK_IMPORTED_MODULE_2__["MapsAPILoader"],
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"],
-            _services_map_service__WEBPACK_IMPORTED_MODULE_4__["MapService"]])
+            _services_map_service__WEBPACK_IMPORTED_MODULE_4__["MapService"],
+            _services_history_service__WEBPACK_IMPORTED_MODULE_5__["HistoryService"]])
     ], MapComponent);
     return MapComponent;
 }());
@@ -382,7 +407,7 @@ var MapComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav>\n  <ul>\n    <li>\n      <a href=\"#\">My Staff Reqeuest</a>\n    </li>\n    <li>\n      <a href=\"#\">My Account</a>\n    </li>\n    <li>\n      <a href=\"#\">Chat</a>\n    </li>\n    <li>\n      <a href=\"#\">Help</a>\n    </li>\n  </ul>\n</nav>"
+module.exports = "<nav>\n  <section class=\"user\">\n    <img [src]=\"userpict\" alt=\"\">\n    <h4 class=\"username\">\n      {{username}}\n    </h4>\n  </section>\n  <ul>\n    <li>\n      <a href=\"#\">\n        <fa-icon [icon]=\"faQuestionCircle\"></fa-icon>\n        My Staff Reqeuest</a>\n    </li>\n    <li>\n      <a href=\"#\">\n        <fa-icon [icon]=\"faQuestionCircle\"></fa-icon>\n        My Account</a>\n    </li>\n    <li>\n      <a href=\"#\">\n        <fa-icon [icon]=\"faCommentAlt\"></fa-icon>\n        Chat</a>\n    </li>\n    <li>\n      <a href=\"#\">\n        <fa-icon [icon]=\"faQuestionCircle\"></fa-icon>\n        Help</a>\n    </li>\n  </ul>\n  <ul class=\"bottom\">\n    <li>\n      <a href=\"#\">Logout</a>\n    </li>\n    <li>\n      <a href=\"#\">\n        <img src=\"https://muddydogcoffee.com/wp-content/uploads/2017/03/sumatra-flag.jpg\" alt=\"indonesian flag\">\n      </a>\n      <a href=\"#\">\n        <img src=\"https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png\"\n          alt=\"british flag\">\n      </a>\n    </li>\n  </ul>\n</nav>"
 
 /***/ }),
 
@@ -393,7 +418,7 @@ module.exports = "<nav>\n  <ul>\n    <li>\n      <a href=\"#\">My Staff Reqeuest
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "nav {\n  background: #30323A;\n  color: white;\n  width: 200px;\n  height: calc(100vh - 50px); }\n  nav ul, nav li {\n    margin: 0;\n    padding: 0;\n    list-style: none; }\n  nav ul {\n    padding-top: 1em; }\n  nav a {\n    display: block;\n    padding: 0.5em 1em;\n    color: white;\n    text-decoration: none; }\n  nav a:hover {\n    background: #282A31; }\n"
+module.exports = "nav {\n  position: relative;\n  background: #30323A;\n  color: white;\n  width: 200px;\n  height: calc(100vh - 50px); }\n  nav ul, nav li {\n    margin: 0;\n    padding: 0;\n    list-style: none; }\n  nav ul {\n    padding-top: 1em; }\n  nav a {\n    display: block;\n    padding: 0.7em 1em;\n    color: white;\n    text-decoration: none;\n    color: #9a9999; }\n  nav a:hover {\n    background: #282A31;\n    color: #cdcccc; }\n  nav .bottom {\n    padding: 1em;\n    position: fixed;\n    bottom: 0;\n    left: 0;\n    display: flex;\n    width: 200px;\n    justify-content: space-between; }\n  nav .bottom li {\n      display: flex; }\n  nav .bottom a {\n      padding: 0;\n      width: 30px;\n      margin-left: 0.5em; }\n  nav .bottom img {\n      width: 100%; }\n  nav .user {\n    text-align: center;\n    padding-top: 2em; }\n  nav .username {\n    margin-top: 1em; }\n  nav img {\n    background: white;\n    width: 120px; }\n  @media only screen and (max-width: 500px) {\n  nav {\n    display: none;\n    opacity: 0; } }\n"
 
 /***/ }),
 
@@ -408,6 +433,7 @@ module.exports = "nav {\n  background: #30323A;\n  color: white;\n  width: 200px
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SideMenuComponent", function() { return SideMenuComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -418,8 +444,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var SideMenuComponent = /** @class */ (function () {
     function SideMenuComponent() {
+        this.userpict = 'https://lighthouse-ci.appspot.com/logo-nolight.png';
+        this.username = 'Mercusuar';
+        this.faCommentAlt = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__["faCommentAlt"];
+        this.faQuestionCircle = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_1__["faQuestionCircle"];
     }
     SideMenuComponent.prototype.ngOnInit = function () {
     };
@@ -432,6 +464,57 @@ var SideMenuComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], SideMenuComponent);
     return SideMenuComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/history.service.ts":
+/*!*********************************************!*\
+  !*** ./src/app/services/history.service.ts ***!
+  \*********************************************/
+/*! exports provided: HistoryService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HistoryService", function() { return HistoryService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs_add_operator_map__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/add/operator/map */ "./node_modules/rxjs-compat/_esm5/add/operator/map.js");
+/* harmony import */ var rxjs_add_operator_catch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/add/operator/catch */ "./node_modules/rxjs-compat/_esm5/add/operator/catch.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var HistoryService = /** @class */ (function () {
+    function HistoryService(http) {
+        this.http = http;
+    }
+    HistoryService.prototype.saveLocation = function (location) {
+        return localStorage.setItem('location', JSON.stringify(location));
+    };
+    HistoryService.prototype.locationHistory = function () {
+        var location = localStorage.getItem('location') ? JSON.parse(localStorage.getItem('location')) : [];
+        return location;
+    };
+    HistoryService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], HistoryService);
+    return HistoryService;
 }());
 
 

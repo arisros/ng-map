@@ -1,31 +1,50 @@
 <div
   [ngClass]="{fullscreen: fullscreen}"
   class="container-fluid">
-  <h1 *ngIf="!fullscreen">Location</h1>
+  <div *ngIf="!fullscreen" class="breadcrumb">
+    <h1 >Send Location</h1>
+  </div>
   <section class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="form-group">
         <button 
           *ngIf="fullscreen"
           class="btn btn-circle" (click)="onClose()">
           <fa-icon [icon]="faArrowLeft"></fa-icon>
         </button>
-        <input placeholder="Find my location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control"
+        <input 
+          placeholder="Find my location" 
+          autocorrect="off" autocapitalize="off" 
+          spellcheck="off" 
+          type="text" 
+          class="form-control"
           #search [formControl]="searchControl">
-        <button *ngIf="fullscreen" 
+        <button *ngIf="fullscreen && locationSelected" 
           (click)="selectLocation()"
           class="btn btn-primary">Select Location</button>
       </div>
+    </div>
+    <div *ngIf="!fullscreen" class="col-md-6">
+      <h4>Your Saved Location</h4>
+      <ul class="list-location">
+        <li *ngFor="let location of savedLocation.reverse()">
+          <div class="btn" (click)="setLocation(location)">
+            <fa-icon [icon]="faMapMarkerAlt"></fa-icon> {{location.name}}
+          </div>
+        </li>
+      </ul>
     </div>
     <div class="col-md-6 map-wrap">
       <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
         <agm-marker *ngIf="locationSelected" [iconUrl]="markerIconUrl()" [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" (dragEnd)="markerDrag($event)"></agm-marker>
       </agm-map>
-      <p *ngIf="!fullscreen">Map to small?</p>
-      <button
-         *ngIf="!fullscreen"
-        class="btn btn-default" (click)="fullscreen = true">Use Full Map</button>
-      <button *ngIf="!fullscreen" class="btn btn-primary">Save</button>
+      <section class="footer-control">
+        <div>
+          <p *ngIf="!fullscreen">Map to small?</p>
+          <button *ngIf="!fullscreen" class="btn btn-default" (click)="fullscreen = true">Use Full Map</button>
+        </div>
+        <button *ngIf="!fullscreen" (click)="selectLocation()" [disabled]="!locationSelected" class="btn btn-primary">Save</button>
+      </section>
     </div>
   </section>
 </div>

@@ -2,13 +2,19 @@
 @import '../../scss/_variables.scss';
 header {
   height: 50px;
+  display: flex;
+  align-items: center;
 }
 .logo {
   height: 100%;
   width: 200px;
-  padding: 0.5em 2em;
+  padding: 0.7em 2em;
   background: $secondary;
   img {
     width: 100%;
   }
+}
+.title {
+  margin-left: 0.8em;
+  font-size: 1.4em;
 }

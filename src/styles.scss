@@ -10,10 +10,18 @@ body {
 app-map {
   // width: calc(100%-200px);
   margin-left: 200px;
+  padding-top: 50px;
   display: block;
+  margin-bottom: 2em;
 }
 app-side-menu {
   position: fixed;
+  top: 50px;
+  z-index: 999;
+}
+app-header {
+  position: fixed;
+  z-index: 999;
 }
 app-root {
   margin: 0;
@@ -24,9 +32,21 @@ h1,h2,h3,h3,h4,h5, p {
   margin: 0;
   padding: 0;
 }
-
+ul,li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+@media only screen and(max-width: 500px) {
+  app-map {
+    margin-left: 0;
+  }
+}
+.btn {
+  font-size: 0.8em;
+}
 .btn.btn-default {
-  border: 1px solid $grey-ligther;
+  border: 1px solid $grey-lighter;
 }
 
 .btn.btn-primary {
@@ -37,4 +57,10 @@ h1,h2,h3,h3,h4,h5, p {
     background: darken($yellow, 5);
   }
 }
-
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: $yellow;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba($yellow, 0.1);
+}
