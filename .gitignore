@@ -2,7 +2,6 @@
 
 # compiled output
 package_json.lock
-/dist
 /tmp
 /out-tsc
 
