@@ -1,0 +1,3 @@
+[submodule "dist/helpster-map-ng/dist-agnular"]
+	path = dist/helpster-map-ng/dist-agnular
+	url = https://github.com/arisros/dist-agnular.git
